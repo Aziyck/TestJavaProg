@@ -1,0 +1,185 @@
+-- Database: GaraFeroviara
+
+-- DROP DATABASE IF EXISTS "GaraFeroviara";
+
+CREATE DATABASE "GaraFeroviara"
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Romanian_Moldova.1252'
+    LC_CTYPE = 'Romanian_Moldova.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+
+-- Table: public.Locatii
+
+-- DROP TABLE IF EXISTS public."Locatii";
+
+CREATE TABLE IF NOT EXISTS public."Locatii"
+(
+    "IDLocatie" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "NumeLocatie" character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT "Locatii_pkey" PRIMARY KEY ("IDLocatie")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Locatii"
+    OWNER to postgres;
+
+
+-- Table: public.Zile
+
+-- DROP TABLE IF EXISTS public."Zile";
+
+CREATE TABLE IF NOT EXISTS public."Zile"
+(
+    "IDZiua" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "NumeZi" character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT "Zile_pkey" PRIMARY KEY ("IDZiua")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Zile"
+    OWNER to postgres;
+
+
+-- Table: public.Rute
+
+-- DROP TABLE IF EXISTS public."Rute";
+
+CREATE TABLE IF NOT EXISTS public."Rute"
+(
+    "CodCursa" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "DataPlecarii" character varying(12) COLLATE pg_catalog."default",
+    "OraPlecarii" character varying(8) COLLATE pg_catalog."default",
+    "LocatieInitiala" integer,
+    "DataSosirii" character varying(12) COLLATE pg_catalog."default",
+    "OraSosirii" character varying(8) COLLATE pg_catalog."default",
+    "Destinatie" integer,
+    "Durata" bigint,
+    "NrSaptamanii" integer,
+    "LocuriDisponibileConfort" integer,
+    "LocuriConfort" integer,
+    "PretConfort" real,
+    "LocuriDisponibileEco" integer,
+    "LocuriEco" integer,
+    "PretEco" real,
+    "IDZiua" integer,
+    CONSTRAINT "Rute_pkey" PRIMARY KEY ("CodCursa"),
+    CONSTRAINT "Rute_Destinatie_fkey" FOREIGN KEY ("Destinatie")
+        REFERENCES public."Locatii" ("IDLocatie") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "Rute_IDZiua_fkey" FOREIGN KEY ("IDZiua")
+        REFERENCES public."Zile" ("IDZiua") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "Rute_LocatieInitiala_fkey" FOREIGN KEY ("LocatieInitiala")
+        REFERENCES public."Locatii" ("IDLocatie") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Rute"
+    OWNER to postgres;
+
+
+
+-- Table: public.RuteAnulate
+
+-- DROP TABLE IF EXISTS public."RuteAnulate";
+
+CREATE TABLE IF NOT EXISTS public."RuteAnulate"
+(
+    "CodCursa" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "DataPlecarii" character varying(12) COLLATE pg_catalog."default",
+    "OraPlecarii" character varying(8) COLLATE pg_catalog."default",
+    "LocatieInitiala" integer,
+    "DataSosirii" character varying(12) COLLATE pg_catalog."default",
+    "OraSosirii" character varying(8) COLLATE pg_catalog."default",
+    "Destinatie" integer,
+    "Durata" bigint,
+    "NrSaptamanii" integer,
+    "LocuriDisponibileConfort" integer,
+    "LocuriConfort" integer,
+    "PretConfort" real,
+    "LocuriDisponibileEco" integer,
+    "LocuriEco" integer,
+    "PretEco" real,
+    "IDZiua" integer,
+    CONSTRAINT "RuteAnulate_pkey" PRIMARY KEY ("CodCursa"),
+    CONSTRAINT "RuteAnulate_Destinatie_fkey" FOREIGN KEY ("Destinatie")
+        REFERENCES public."Locatii" ("IDLocatie") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "RuteAnulate_IDZiua_fkey" FOREIGN KEY ("IDZiua")
+        REFERENCES public."Zile" ("IDZiua") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "RuteAnulate_LocatieInitiala_fkey" FOREIGN KEY ("LocatieInitiala")
+        REFERENCES public."Locatii" ("IDLocatie") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."RuteAnulate"
+    OWNER to postgres;
+
+
+-- Table: public.RuteAnulate
+
+-- DROP TABLE IF EXISTS public."RuteAnulate";
+
+CREATE TABLE IF NOT EXISTS public."RuteAnulate"
+(
+    "CodCursa" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "DataPlecarii" character varying(12) COLLATE pg_catalog."default",
+    "OraPlecarii" character varying(8) COLLATE pg_catalog."default",
+    "LocatieInitiala" integer,
+    "DataSosirii" character varying(12) COLLATE pg_catalog."default",
+    "OraSosirii" character varying(8) COLLATE pg_catalog."default",
+    "Destinatie" integer,
+    "Durata" bigint,
+    "NrSaptamanii" integer,
+    "LocuriDisponibileConfort" integer,
+    "LocuriConfort" integer,
+    "PretConfort" real,
+    "LocuriDisponibileEco" integer,
+    "LocuriEco" integer,
+    "PretEco" real,
+    "IDZiua" integer,
+    CONSTRAINT "RuteAnulate_pkey" PRIMARY KEY ("CodCursa"),
+    CONSTRAINT "RuteAnulate_Destinatie_fkey" FOREIGN KEY ("Destinatie")
+        REFERENCES public."Locatii" ("IDLocatie") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "RuteAnulate_IDZiua_fkey" FOREIGN KEY ("IDZiua")
+        REFERENCES public."Zile" ("IDZiua") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "RuteAnulate_LocatieInitiala_fkey" FOREIGN KEY ("LocatieInitiala")
+        REFERENCES public."Locatii" ("IDLocatie") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."RuteAnulate"
+    OWNER to postgres;
+
+
